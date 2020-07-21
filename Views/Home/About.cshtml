@@ -1,7 +1,167 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Nosotros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+    <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(@Url.Content("~/theme/images/bg-title-page-01.jpg"));">
+        <h2 class="tit6 t-center">
+            Nosotros
+        </h2>
+    </section>
+
+<!-- Our Story -->
+<section class="bg2-pattern p-t-116 p-b-110 t-center p-l-15 p-r-15">
+    <span class="tit2 t-center">
+        Panaderia Salvadoreña
+    </span>
+
+    <h3 class="tit3 t-center m-b-35 m-t-5">
+        Nuestra Historia
+    </h3>
+
+    <p class="text-justify size32 m-l-r-auto">
+        Nos dedicamos profesionalmente al sector panadero, bollería y dulces desde comienzos del año 1985. Nuestra historia se remonta a la primera etapa, que se dedicaba a la elaboración de pan artesano en un horno rudimentario, elaborando el producto para los vecinos de la zona. La segunda etapa inicia su andadura y es aquí donde  surge la iniciativa de dedicarse profesionalmente a la fabricación de productos derivados de la harina.<br><br>
+        El promotor José Antonio Cortés decide ampliar el negocio y pone en marcha un nuevo horno de pan. A principios de 1995 la sede de la empresa se traslada al Paseo General Escalón, donde se instala el primer horno.
+    </p>
+</section>
+
+<!-- Delicious & Romantic-->
+<section class="bg1-pattern p-t-120 p-b-105">
+    <div class="container">
+        <!-- Delicious -->
+        <div class="row">
+            <div class="col-md-6 p-t-45 p-b-30">
+                <div class="wrap-text-delicious t-center">
+                    <span class="tit2 t-center">
+                        Deliciosos
+                    </span>
+
+                    <h3 class="tit3 t-center m-b-35 m-t-5">
+                        HORNEADOS
+                    </h3>
+
+                    <p class="t-center m-b-22 size3 m-l-r-auto">
+                        Donec quis lorem nulla. Nunc eu odio mi. Morbi nec lobortis est. Sed fringilla, nunc sed imperdiet lacinia, nisl ante egestas mi, ac facilisis ligula sem id neque.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 p-b-30">
+                <div class="wrap-pic-delicious size2 bo-rad-10 hov-img-zoom m-l-r-auto">
+                    <img src="@Url.Content("~/theme/images/our-story-01.jpg")" alt="IMG-OUR">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Romantic -->
+        <div class="row p-t-170">
+            <div class="col-md-6 p-b-30">
+                <div class="wrap-pic-romantic size2 bo-rad-10 hov-img-zoom m-l-r-auto">
+                    <img src="@Url.Content("~/theme/images/our-story-02.jpg")" alt="IMG-OUR">
+                </div>
+            </div>
+
+            <div class="col-md-6 p-t-45 p-b-30">
+                <div class="wrap-text-romantic t-center">
+                    <span class="tit2 t-center">
+                        Romántico
+                    </span>
+
+                    <h3 class="tit3 t-center m-b-35 m-t-5">
+                        Ambiente
+                    </h3>
+
+                    <p class="t-center m-b-22 size3 m-l-r-auto">
+                        Fusce iaculis, quam quis volutpat cursus, tellus quam varius eros, in euismod lorem nisl in ante. Maecenas imperdiet vulputate dui sit amet vestibulum. Nulla quis suscipit nisl.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Chef -->
+<section class="section-chef bgwhite p-t-115 p-b-95">
+    <div class="container t-center">
+        <span class="tit2 t-center">
+            Nuestros
+        </span>
+
+        <h3 class="tit5 t-center m-b-50 m-t-5">
+            Chef
+        </h3>
+
+        <div class="row">
+            <div class="col-md-8 col-lg-4 m-l-r-auto p-b-30">
+                <!-- -Block5 -->
+                <div class="blo5 pos-relative p-t-60">
+                    <div class="pic-blo5 size14 bo4 wrap-cir-pic hov-img-zoom ab-c-t">
+                        <img src="@Url.Content("~/theme/images/avatar-02.jpg")" alt="IGM-AVATAR">
+                    </div>
+
+                    <div class="text-blo5 size34 t-center bo-rad-10 bo7 p-t-90 p-l-35 p-r-35 p-b-30">
+                        <span class="txt34 dis-block p-b-6">
+                            Jonathan Morán
+                        </span>
+
+                        <span class="dis-block t-center txt35 p-b-25">
+                            Chef
+                        </span>
+
+                        <p class="t-center">
+                            Cocinero de alta gama y experiencia, le gusta probar cosas nuevas y no le tiene miedo a las cosas grandes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-lg-4 m-l-r-auto p-b-30">
+                <!-- -Block5 -->
+                <div class="blo5 pos-relative p-t-60">
+                    <div class="pic-blo5 size14 bo4 wrap-cir-pic hov-img-zoom ab-c-t">
+                        <img src="@Url.Content("~/theme/images/avatar-03.jpg")" alt="IGM-AVATAR">
+                    </div>
+
+                    <div class="text-blo5 size34 t-center bo-rad-10 bo7 p-t-90 p-l-35 p-r-35 p-b-30">
+                        <span class="txt34 dis-block p-b-6">
+                            Elizabeth Colorado
+                        </span>
+
+                        <span class="dis-block t-center txt35 p-b-25">
+                            Chef
+                        </span>
+
+                        <p class="t-center">
+                            Experiencia culinaria destacada, renombre a nivel nacional la palabra que mejor la describe "eficiencia".
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-lg-4 m-l-r-auto p-b-30">
+                <!-- -Block5 -->
+                <div class="blo5 pos-relative p-t-60">
+                    <div class="pic-blo5 size14 bo4 wrap-cir-pic hov-img-zoom ab-c-t">
+                        <img src="@Url.Content("~/theme/images/avatar-05.jpg")" alt="IGM-AVATAR">
+                    </div>
+
+                    <div class="text-blo5 size34 t-center bo-rad-10 bo7 p-t-90 p-l-35 p-r-35 p-b-30">
+                        <span class="txt34 dis-block p-b-6">
+                            Rafael Melgar
+                        </span>
+
+                        <span class="dis-block t-center txt35 p-b-25">
+                            Chef
+                        </span>
+
+                        <p class="t-center">
+                            Su especialidad "el chocolate", le gusta que sus postres tengan esos tonos oscuros, lo describe grandeza.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
