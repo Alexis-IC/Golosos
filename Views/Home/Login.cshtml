@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Ingresar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(@Url.Content("~/theme/images/bg-title-page-01.jpg"));">
+    <h2 class="tit6 t-center">
+        Ingresar
+    </h2>
+</section>
+
+<!-- Contact form -->
+<section class="section-contact bg1-pattern p-t-90 p-b-113">
+    <div class="container">
+        <h3 class="tit7 t-center p-b-62 p-t-105">
+            Formulario de ingreso
+        </h3>
+
+        @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="identidad">Identidad</label>
+                <input type="text" class="form-control" id="identidad" aria-describedby="emailHelp" placeholder="Escribe tu usuario o correo">
+                <small id="emailHelp" class="form-text text-muted">No deberias compartir tu cuenta con nadie más.</small>
+            </div>
+            <div class="form-group">
+                <label for="clave">Contraseña</label>
+                <input type="password" class="form-control" id="clave" placeholder="Escribe tu contraseña">
+            </div>
+
+
+            <div class="wrap-btn-booking flex-c-m m-t-13">
+                <button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">
+                    Iniciar sesión
+                </button>
+            </div>
+        }
+    </div>
+</section>
+
+
