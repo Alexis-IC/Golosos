@@ -126,7 +126,7 @@ namespace LosGolosos.Controllers
             {
                 MailMessage correo = new MailMessage();
                 correo.From = new MailAddress(oMailCLS.desde);
-                correo.To.Add("2555732018@mail.utec.edu.sv");
+                correo.To.Add("2541852018@mail.utec.edu.sv");
                 correo.Subject = "Formulario de contácto - Los Golosos";
                 correo.Body = oMailCLS.GenerarContacto();
                 correo.IsBodyHtml = true;

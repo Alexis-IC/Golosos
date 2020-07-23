@@ -2039,7 +2039,6 @@
     <Content Include="theme\images\our-menu-19.jpg" />
     <Content Include="theme\images\our-menu-20.jpg" />
     <Content Include="theme\images\our-story-01.jpg" />
-    <Content Include="theme\images\our-story-02.jpg" />
     <Content Include="theme\images\our-story-03.jpg" />
     <Content Include="theme\images\photo-gallery-01.jpg" />
     <Content Include="theme\images\photo-gallery-02.jpg" />
@@ -2091,6 +2090,7 @@
     <Content Include="theme\js\main.js" />
     <Content Include="theme\js\map-custom.js" />
     <Content Include="theme\js\slick-custom.js" />
+    <Content Include="theme\images\our-story-02.jpg" />
     <Content Include="theme\vendor\animate\animate.css" />
     <Content Include="theme\vendor\animsition\css\animsition.css" />
     <Content Include="theme\vendor\animsition\css\animsition.min.css" />
