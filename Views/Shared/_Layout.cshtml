@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using LosGolosos.Models
+@{
+    UsuarioCLS user = Session["User"] == null ? null : (UsuarioCLS)Session["User"];
+}
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <title>@ViewBag.Title - Los Golosos</title>
@@ -49,25 +53,37 @@
                     <div class="wrap_menu p-l-45 p-l-0-xl">
                         <nav class="menu">
                             <ul class="main_menu">
-                                <li>
-                                    @Html.ActionLink("Inicio", "Index","Home")
-                                </li>
+                                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
 
-                                <li>
-                                    @Html.ActionLink("Menú", "Menu","Home")
-                                </li>
+                                <li>@Html.ActionLink("OrT", "Menu", "Home")</li>
 
-                                <li>
-                                    @Html.ActionLink("Ingresar", "Login", "Home")
-                                </li>
+                                <li>@Html.ActionLink("ProT", "Productos", "Employees")</li>
 
-                                <li>
-                                    @Html.ActionLink("Nosotros","About","Home")
-                                </li>
+                                @if (user == null)
+                                {
+                                    <li>@Html.ActionLink("Ingresar", "Login", "Home")</li>
+                                }
+                                else if (user.idRol == 1)
+                                {
+                                    <li>@Html.ActionLink("AdminCP", "Index", "Employees")</li>
+                                }
+                                else if (user.idRol == 2)
+                                {
+                                    <li>@Html.ActionLink("VentasCP", "Ventas", "Employees")</li>
+                                }
+                                else
+                                {
+                                    <li>@Html.ActionLink("Ordenar", "Menu", "Home")</li>
+                                }
 
-                                <li>
-                                    @Html.ActionLink("Contáctanos", "Contact","Home")
-                                </li>
+                                <li>@Html.ActionLink("Nosotros", "About", "Home")</li>
+
+                                <li>@Html.ActionLink("Contáctanos", "Contact", "Home")</li>
+
+                                @if (user != null)
+                                {
+                                    <li>@Html.ActionLink("Salir", "Logout", "Home")</li>
+                                }
                             </ul>
                         </nav>
                     </div>
@@ -92,11 +108,15 @@
 
         <ul class="menu-sidebar p-t-95 p-b-70">
             <li class="t-center m-b-13">
-                @Html.ActionLink("Inicio","Index","Home",new { @class="txt19" })
+                @Html.ActionLink("Inicio", "Index", "Home", new { @class = "txt19" })
             </li>
 
             <li class="t-center m-b-13">
                 @Html.ActionLink("Menú", "Menu", "Home", new { @class = "txt19" })
+            </li>
+
+            <li class="t-center m-b-13">
+                @Html.ActionLink("Mi Cuenta", "Index", "Employees", new { @class = "txt19" })
             </li>
 
             <li class="t-center m-b-13">
@@ -112,6 +132,12 @@
                 <!-- Button3 -->
                 @Html.ActionLink("Ingresar", "Login", "Home", new { @class = "btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" })
             </li>
+
+            <li class="t-center">
+                <!-- Button3 -->
+                @Html.ActionLink("Salir", "Logout", "Home", new { @class = "btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" })
+            </li>
+
         </ul>
 
         <!-- - -->
@@ -363,6 +389,7 @@
     <!--===============================================================================================-->
     <script type="text/javascript" src="~/theme/vendor/lightbox2/js/lightbox.min.js"></script>
     <!--===============================================================================================-->
+    <script type="text/javascript" src="~/theme/js/jquery.unobtrusive-ajax.js"></script>
     <script src="~/theme/js/main.js"></script>
 
 </body>

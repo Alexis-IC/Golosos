@@ -1,0 +1,67 @@
+﻿@using LosGolosos.Models
+@model List<ProductoCLS>
+@{
+    ViewBag.Title = "Ordenar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<ProductoCLS> carrito = (List<ProductoCLS>)Session["Carrito"];
+}
+
+<section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(@Url.Content("~/theme/images/bg-title-page-01.jpg"));">
+    <h2 class="tit6 t-center">
+        Productos
+    </h2>
+</section>
+
+<section class="bg2-pattern p-t-116 p-b-110 t-center p-l-15 p-r-15">
+
+    @using (Ajax.BeginForm("FiltroProductos", "Employees", null, new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "tableOrders",
+        InsertionMode = InsertionMode.Replace
+    }, new { @id = "frmFiltro" }))
+    {
+        @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Buscar por nombre o apellido" })
+    }
+    <br />
+    <div id="tableOrders">
+        @Html.Partial("_TableOrders", Model)
+    </div>
+
+</section>
+
+<section class="bg2-pattern p-t-116 p-b-110 t-center p-l-15 p-r-15">
+    @using (Ajax.BeginForm("AgregarCarrito", "Employees", null, new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "tableCart",
+        InsertionMode = InsertionMode.Replace
+    }, new { @id = "frmCarrito" }))
+    {
+        @Html.Hidden("idProducto");
+    }
+    
+    <button type="submit" class="ml-auto btn3 flex-c-m size36 txt11 trans-0-4" id="btnComprar" hidden="hidden">Comprar</button>
+    <div id="tableCart" hidden="hidden">
+        @Html.Partial("_TableCart", carrito)
+    </div>
+    
+</section>
+
+
+<script>
+
+    document.getElementById("nombre").addEventListener("keyup", (e) => {
+        $("#frmFiltro").trigger("submit");
+    });
+
+    function getId(id)
+    {
+        document.getElementById("tableCart").removeAttribute("hidden");
+        document.getElementById("btnComprar").removeAttribute("hidden");
+
+        document.getElementById("idProducto").value = id;
+        $("#frmCarrito").trigger("submit");
+    }
+</script>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fc663ad481924a1ea25939cf9fc03151" Name="Diagram1">
+        <EntityTypeShape EntityType="GolososModel.Categorias" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.Clientes" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.DetalleVentas" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.Empleados" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.Personas" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.Productos" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.Promociones" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.Usuarios" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GolososModel.Ventas" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
+        <AssociationConnector Association="GolososModel.FK__Productos__idCat__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__Clientes__idPers__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__Ventas__idClient__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__DetalleVe__idPro__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__DetalleVe__idVen__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__Empleados__idPer__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__Ventas__idEmplea__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__Usuarios__idPers__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="GolososModel.FK__Promocion__idPro__4AB81AF0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

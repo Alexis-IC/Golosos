@@ -1,0 +1,34 @@
+﻿@using LosGolosos.Models
+@model List<EmployeesCLS>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">@Html.LabelFor(p => Model[0].idEmpleado)</th>
+                <th class="text-center">@Html.LabelFor(p => Model[0].cargo)</th>
+                <th class="text-center">@Html.LabelFor(p => Model[0].nombre)</th>
+                <th class="text-center">@Html.LabelFor(p => Model[0].apellido)</th>
+                <th class="text-center">@Html.LabelFor(p => Model[0].sexo)</th>
+                <th class="text-center">@Html.LabelFor(p => Model[0].correo)</th>
+                <th class="text-center" width="10%">@Html.Label("Operaciones")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (EmployeesCLS employee in Model)
+            {
+                <tr>
+                    <td>@employee.idEmpleado</td>
+                    <td>@employee.cargo</td>
+                    <td>@employee.nombre</td>
+                    <td>@employee.apellido</td>
+                    <td>@employee.sexo</td>
+                    <td>@employee.correo</td>
+                    <td>
+                        @Html.ActionLink(" ", "Editar", "Employees", new { id = employee.idEmpleado }, new { @class = "fa fa-pencil-square" })
+                        <button type="button" onclick="getId(@employee.idEmpleado)" class="fa fa-trash" data-toggle="modal" data-target="#deleteModal"></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+

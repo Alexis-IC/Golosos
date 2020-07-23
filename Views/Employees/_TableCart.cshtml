@@ -1,0 +1,40 @@
+﻿@using LosGolosos.Models
+@model List<ProductoCLS>
+@{
+    decimal totalPagar = 0;
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">@Html.LabelFor(p => Model[0].imagen)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].categoria)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].nombre)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].detalle)</th>
+            <th class="text-center" width="10%">@Html.Label("Cantidad")</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].precio)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductoCLS producto in Model)
+        {
+            <tr>
+                <td><img src="@Url.Content(producto.imagen)" alt="@producto.nombre" height="32px" /></td>
+                <td>@producto.categoria</td>
+                <td>@producto.nombre</td>
+                <td>@producto.detalle</td>
+                <td>@producto.pedidos</td>
+                <td>$@producto.precio</td>
+            </tr>
+            totalPagar = totalPagar + (producto.precio*producto.pedidos);
+            }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4"></td>
+            <td>TOTAL</td>
+            <td>$@totalPagar</td>
+        </tr>
+    </tfoot>
+</table>
+

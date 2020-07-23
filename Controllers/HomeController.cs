@@ -4,6 +4,7 @@ using System.Net.Mail;
 using System.Linq;
 using System.Web.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace LosGolosos.Controllers
 {
@@ -22,12 +23,95 @@ namespace LosGolosos.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.ListaSexo = ComboSexo();
             return View();
+        }
+        [HttpPost]
+        public ActionResult Login(UsuarioCLS oUsuarioCLS)
+        {
+            bool autenticado = false;
+            
+            using (BDGolososEntities bd = new BDGolososEntities())
+            {
+                autenticado = bd.Usuarios.Where(p => p.usuario.Equals(oUsuarioCLS.user) && p.clave.Equals(oUsuarioCLS.pass)).Count() == 1;
+
+                if(autenticado)
+                {
+                    int idPersona = (int)bd.Usuarios.Where(p => p.usuario.Equals(oUsuarioCLS.user)).FirstOrDefault().idPersona;
+                    if(bd.Empleados.Find(idPersona) != null)
+                    {
+                        oUsuarioCLS.idRol = (int)bd.Empleados.Find(idPersona).idCargo;
+                    }
+                    else
+                    {
+                        oUsuarioCLS.idRol = 3;
+                    }
+                }
+                
+            }
+
+            if(autenticado)
+            {
+                Session["User"] = oUsuarioCLS;
+                return RedirectToAction("Index");
+            }
+
+
+            ViewBag.ListaSexo = ComboSexo();
+            return View(oUsuarioCLS);
+        }
+
+        public string Registrar(ClienteCLS oClienteCLS, string titulo)
+        {
+            string resp = "0";
+
+            using (BDGolososEntities bd = new BDGolososEntities())
+            {
+                if (titulo.Equals("1"))
+                {
+                    Personas oPersona = new Personas();
+                    oPersona.nombre = oClienteCLS.nombre;
+                    oPersona.apellido = oClienteCLS.apellido;
+                    oPersona.dir = oClienteCLS.dir;
+                    oPersona.tel = oClienteCLS.tel;
+                    oPersona.correo = oClienteCLS.correo;
+
+                    bd.Personas.Add(oPersona);
+                    bd.SaveChanges();
+
+                    Clientes oCliente= new Clientes();
+                    
+                    int idPersona = bd.Personas.Where(p => p.correo.Equals(oClienteCLS.correo)).First().idPersona;
+                    oCliente.idPersona = idPersona;
+
+                    oCliente.registro = DateTime.Now;
+
+                    bd.Clientes.Add(oCliente);
+                    bd.SaveChanges();
+
+                    Usuarios oUsuarios = new Usuarios();
+
+                    oUsuarios.idPersona = idPersona;
+                    oUsuarios.usuario = oClienteCLS.user;
+                    oUsuarios.clave = oClienteCLS.pass;
+
+                    bd.Usuarios.Add(oUsuarios);
+                    resp = bd.SaveChanges().ToString();
+                }
+            }
+
+            return resp;
         }
 
         public ActionResult About()
         {
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Remove("User");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Contact()
@@ -68,6 +152,16 @@ namespace LosGolosos.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public List<SelectListItem> ComboSexo()
+        {
+            List<SelectListItem> sourceList = new List<SelectListItem>();
+
+            sourceList.Add(new SelectListItem { Text = "Masculino", Value = "M" });
+            sourceList.Add(new SelectListItem { Text = "Femenino", Value = "F" });
+
+            return sourceList;
         }
 
     }

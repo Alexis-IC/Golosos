@@ -1,4 +1,6 @@
-﻿
+﻿@using LosGolosos.Models
+@model List<ProductoCLS>
+
 @{
     ViewBag.Title = "Menú";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,6 +12,10 @@
         Menú
     </h2>
 </section>
+
+
+@Html.Partial("",)
+
 
 <!-- Lunch -->
 <section class="section-lunch bgwhite">

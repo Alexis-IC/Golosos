@@ -1,7 +1,10 @@
-﻿
+﻿@using LosGolosos.Models
+@model UsuarioCLS
+
 @{
     ViewBag.Title = "Ingresar";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.ListaSexo;
 }
 
 <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(@Url.Content("~/theme/images/bg-title-page-01.jpg"));">
@@ -17,26 +20,122 @@
             Formulario de ingreso
         </h3>
 
-        @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
         {
             <div class="form-group">
-                <label for="identidad">Identidad</label>
-                <input type="text" class="form-control" id="identidad" aria-describedby="emailHelp" placeholder="Escribe tu usuario o correo">
+                @Html.LabelFor(p=>p.user)
+                @Html.TextBoxFor(p=>p.user,new { @class="form-control", @placeholder="Escribe tu usuario" })
                 <small id="emailHelp" class="form-text text-muted">No deberias compartir tu cuenta con nadie más.</small>
             </div>
             <div class="form-group">
-                <label for="clave">Contraseña</label>
-                <input type="password" class="form-control" id="clave" placeholder="Escribe tu contraseña">
+                @Html.LabelFor(p => p.pass)
+                @Html.TextBoxFor(p => p.pass, new { @class = "form-control", @placeholder = "Escribe tu contraseña",@type="password"})
             </div>
-
+            
+            <span>Si aún no tienes una cuenta, te puedes <button type="button" onclick="Agregar()" class="alert-link" data-toggle="modal" data-target="#addModal">
+                registrar!</button></span>
 
             <div class="wrap-btn-booking flex-c-m m-t-13">
-                <button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">
-                    Iniciar sesión
-                </button>
+                <button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">Iniciar sesión</button>
             </div>
         }
     </div>
 </section>
+
+<br />
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("Registrar", "Home", null, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "Guardar"
+                }))
+                {
+                    @Html.Hidden("titulo")
+                    <div class="form-group">
+                        @Html.Label("Nombre")
+                        @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Escribe tu nombre" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Apellido")
+                        @Html.TextBox("apellido", null, new { @class = "form-control", @placeholder = "Escribe tu apellido" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Género")
+                        @Html.DropDownList("sexo", listaSexo, "Escoge tu género", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Dirección")
+                        @Html.TextBox("dir", null, new { @class = "form-control", @placeholder = "Escribe tu dirección" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Teléfono")
+                        @Html.TextBox("tel", null, new { @class = "form-control", @placeholder = "Escribe tu teléfono" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Correo")
+                        @Html.TextBox("correo", null, new { @class = "form-control", @placeholder = "Escribe tu correo" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Usuario")
+                        @Html.TextBox("user", null, new { @class = "form-control", @placeholder = "Escribe tu usuario" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Contraseña")
+                        @Html.TextBox("pass", null, new { @class = "form-control", @placeholder = "Escribe tu usuario", @type = "password" })
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnClose" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">Registrar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function Agregar() {
+        document.getElementById("titulo").value = "1";
+    }
+
+    document.getElementById("nombre").addEventListener("keyup", (e) => {
+        $("#frmFiltro").trigger("submit");
+    });
+
+    function Guardar(resultado) {
+        if (resultado == "1") {
+            $("#frmFiltro").trigger("submit");
+            document.getElementById("btnClose").click();
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
 
 

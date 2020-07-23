@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GolososModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="idCategoria" />
+    </Key>
+    <Property Name="idCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK__Productos__idCat__47DBAE45" FromRole="Categorias" ToRole="Productos" />
+  </EntityType>
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="idCliente" />
+    </Key>
+    <Property Name="idCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idPersona" Type="Int32" />
+    <Property Name="registro" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Personas" Relationship="Self.FK__Clientes__idPers__398D8EEE" FromRole="Clientes" ToRole="Personas" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__idClient__4222D4EF" FromRole="Clientes" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="DetalleVentas">
+    <Key>
+      <PropertyRef Name="idVenta" />
+      <PropertyRef Name="idProducto" />
+    </Key>
+    <Property Name="idVenta" Type="Int32" Nullable="false" />
+    <Property Name="idProducto" Type="Int32" Nullable="false" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="precio" Type="Decimal" Precision="6" Scale="2" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK__DetalleVe__idPro__4E88ABD4" FromRole="DetalleVentas" ToRole="Productos" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK__DetalleVe__idVen__4D94879B" FromRole="DetalleVentas" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="Empleados">
+    <Key>
+      <PropertyRef Name="idEmpleado" />
+    </Key>
+    <Property Name="idEmpleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idPersona" Type="Int32" />
+    <Property Name="idCargo" Type="Int32" />
+    <Property Name="sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="dui" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="idEstado" Type="Int32" />
+    <NavigationProperty Name="Personas" Relationship="Self.FK__Empleados__idPer__3C69FB99" FromRole="Empleados" ToRole="Personas" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__idEmplea__4316F928" FromRole="Empleados" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="Personas">
+    <Key>
+      <PropertyRef Name="idPersona" />
+    </Key>
+    <Property Name="idPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="dir" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="tel" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK__Clientes__idPers__398D8EEE" FromRole="Personas" ToRole="Clientes" />
+    <NavigationProperty Name="Empleados" Relationship="Self.FK__Empleados__idPer__3C69FB99" FromRole="Personas" ToRole="Empleados" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuarios__idPers__3F466844" FromRole="Personas" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Productos">
+    <Key>
+      <PropertyRef Name="idProducto" />
+    </Key>
+    <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idCategoria" Type="Int32" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="imagen" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="stock" Type="Int32" />
+    <Property Name="precio" Type="Decimal" Precision="6" Scale="2" />
+    <NavigationProperty Name="Categorias" Relationship="Self.FK__Productos__idCat__47DBAE45" FromRole="Productos" ToRole="Categorias" />
+    <NavigationProperty Name="DetalleVentas" Relationship="Self.FK__DetalleVe__idPro__4E88ABD4" FromRole="Productos" ToRole="DetalleVentas" />
+    <NavigationProperty Name="Promociones" Relationship="Self.FK__Promocion__idPro__4AB81AF0" FromRole="Productos" ToRole="Promociones" />
+  </EntityType>
+  <EntityType Name="Promociones">
+    <Key>
+      <PropertyRef Name="idPromocion" />
+    </Key>
+    <Property Name="idPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idProducto" Type="Int32" />
+    <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="descuento" Type="Decimal" Precision="3" Scale="2" />
+    <Property Name="activa" Type="Boolean" />
+    <Property Name="inicio" Type="DateTime" Precision="3" />
+    <Property Name="fin" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Productos" Relationship="Self.FK__Promocion__idPro__4AB81AF0" FromRole="Promociones" ToRole="Productos" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idPersona" Type="Int32" />
+    <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="clave" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Personas" Relationship="Self.FK__Usuarios__idPers__3F466844" FromRole="Usuarios" ToRole="Personas" />
+  </EntityType>
+  <EntityType Name="Ventas">
+    <Key>
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idCliente" Type="Int32" />
+    <Property Name="idEmpleado" Type="Int32" />
+    <Property Name="fecha" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK__Ventas__idClient__4222D4EF" FromRole="Ventas" ToRole="Clientes" />
+    <NavigationProperty Name="DetalleVentas" Relationship="Self.FK__DetalleVe__idVen__4D94879B" FromRole="Ventas" ToRole="DetalleVentas" />
+    <NavigationProperty Name="Empleados" Relationship="Self.FK__Ventas__idEmplea__4316F928" FromRole="Ventas" ToRole="Empleados" />
+    <Property Name="estado" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK__Productos__idCat__47DBAE45">
+    <End Role="Categorias" Type="Self.Categorias" Multiplicity="0..1" />
+    <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="idCategoria" />
+      </Principal>
+      <Dependent Role="Productos">
+        <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Clientes__idPers__398D8EEE">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="0..1" />
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="idPersona" />
+      </Principal>
+      <Dependent Role="Clientes">
+        <PropertyRef Name="idPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ventas__idClient__4222D4EF">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+    <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="idCliente" />
+      </Principal>
+      <Dependent Role="Ventas">
+        <PropertyRef Name="idCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleVe__idPro__4E88ABD4">
+    <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+    <End Role="DetalleVentas" Type="Self.DetalleVentas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Productos">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="DetalleVentas">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleVe__idVen__4D94879B">
+    <End Role="Ventas" Type="Self.Ventas" Multiplicity="1" />
+    <End Role="DetalleVentas" Type="Self.DetalleVentas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ventas">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="DetalleVentas">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Empleados__idPer__3C69FB99">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="0..1" />
+    <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="idPersona" />
+      </Principal>
+      <Dependent Role="Empleados">
+        <PropertyRef Name="idPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ventas__idEmplea__4316F928">
+    <End Role="Empleados" Type="Self.Empleados" Multiplicity="0..1" />
+    <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleados">
+        <PropertyRef Name="idEmpleado" />
+      </Principal>
+      <Dependent Role="Ventas">
+        <PropertyRef Name="idEmpleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuarios__idPers__3F466844">
+    <End Role="Personas" Type="Self.Personas" Multiplicity="0..1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personas">
+        <PropertyRef Name="idPersona" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="idPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Promocion__idPro__4AB81AF0">
+    <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+    <End Role="Promociones" Type="Self.Promociones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Productos">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="Promociones">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDGolososEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categorias" EntityType="Self.Categorias" />
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+    <EntitySet Name="DetalleVentas" EntityType="Self.DetalleVentas" />
+    <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+    <EntitySet Name="Personas" EntityType="Self.Personas" />
+    <EntitySet Name="Productos" EntityType="Self.Productos" />
+    <EntitySet Name="Promociones" EntityType="Self.Promociones" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+    <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+    <AssociationSet Name="FK__Productos__idCat__47DBAE45" Association="Self.FK__Productos__idCat__47DBAE45">
+      <End Role="Categorias" EntitySet="Categorias" />
+      <End Role="Productos" EntitySet="Productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Clientes__idPers__398D8EEE" Association="Self.FK__Clientes__idPers__398D8EEE">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Clientes" EntitySet="Clientes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ventas__idClient__4222D4EF" Association="Self.FK__Ventas__idClient__4222D4EF">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleVe__idPro__4E88ABD4" Association="Self.FK__DetalleVe__idPro__4E88ABD4">
+      <End Role="Productos" EntitySet="Productos" />
+      <End Role="DetalleVentas" EntitySet="DetalleVentas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleVe__idVen__4D94879B" Association="Self.FK__DetalleVe__idVen__4D94879B">
+      <End Role="Ventas" EntitySet="Ventas" />
+      <End Role="DetalleVentas" EntitySet="DetalleVentas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Empleados__idPer__3C69FB99" Association="Self.FK__Empleados__idPer__3C69FB99">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Empleados" EntitySet="Empleados" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ventas__idEmplea__4316F928" Association="Self.FK__Ventas__idEmplea__4316F928">
+      <End Role="Empleados" EntitySet="Empleados" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuarios__idPers__3F466844" Association="Self.FK__Usuarios__idPers__3F466844">
+      <End Role="Personas" EntitySet="Personas" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Promocion__idPro__4AB81AF0" Association="Self.FK__Promocion__idPro__4AB81AF0">
+      <End Role="Productos" EntitySet="Productos" />
+      <End Role="Promociones" EntitySet="Promociones" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

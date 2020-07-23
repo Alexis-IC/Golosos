@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -120,11 +128,58 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BDGolosos.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDGolosos.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BDGolosos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BDGolosos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDGolosos.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Categorias.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClienteCLS.cs" />
+    <Compile Include="Models\Clientes.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DetalleVentas.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Empleados.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeesCLS.cs" />
     <Compile Include="Models\MailCLS.cs" />
+    <Compile Include="Models\Personas.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductoCLS.cs" />
+    <Compile Include="Models\Productos.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Promociones.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UsuarioCLS.cs" />
+    <Compile Include="Models\Usuarios.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ventas.cs">
+      <DependentUpon>BDGolosos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,8 +191,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\BDGolosos.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BDGolosos.Context.cs</LastGenOutput>
+      <DependentUpon>BDGolosos.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\BDGolosos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BDGolosos.edmx</DependentUpon>
+      <LastGenOutput>BDGolosos.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\BDGolosos.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BDGolosos.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BDGolosos.edmx.diagram">
+      <DependentUpon>BDGolosos.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2014,6 +2086,7 @@
     <Content Include="theme\images\slide1-02.jpg" />
     <Content Include="theme\images\slide1-03.jpg" />
     <Content Include="theme\includes\contact-form.php" />
+    <Content Include="theme\js\jquery.unobtrusive-ajax.js" />
     <Content Include="theme\js\main.js" />
     <Content Include="theme\js\map-custom.js" />
     <Content Include="theme\js\slick-custom.js" />
@@ -2204,9 +2277,17 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\_TableEmployees.cshtml" />
+    <Content Include="Views\Employees\Productos.cshtml" />
+    <Content Include="Views\Employees\_TableProducts.cshtml" />
+    <Content Include="Views\Employees\Ordenar.cshtml" />
+    <Content Include="Views\Employees\_TableOrders.cshtml" />
+    <Content Include="Views\Employees\_TableCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="theme\productos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2220,6 +2301,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

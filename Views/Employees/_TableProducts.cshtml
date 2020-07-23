@@ -1,0 +1,31 @@
+﻿@using LosGolosos.Models
+@model List<ProductoCLS>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">@Html.LabelFor(p => Model[0].imagen)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].categoria)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].nombre)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].detalle)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].precio)</th>
+            <th class="text-center" width="10%">@Html.Label("Operaciones")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductoCLS producto in Model)
+        {
+        <tr>
+            <td><img src="@Url.Content(producto.imagen)" alt="@producto.nombre" height="32px"/></td>
+            <td>@producto.categoria</td>
+            <td>@producto.nombre</td>
+            <td>@producto.detalle</td>
+            <td>$@producto.precio</td>
+            <td>
+                @Html.ActionLink(" ", "Editar", "Employees", new { id = producto.idProducto }, new { @class = "fa fa-pencil-square" })
+                <button type="button" onclick="getId(@producto.idProducto)" class="fa fa-trash" data-toggle="modal" data-target="#deleteModal"></button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

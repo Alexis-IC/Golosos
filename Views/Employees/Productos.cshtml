@@ -1,0 +1,110 @@
+﻿@using LosGolosos.Models
+@model List<ProductoCLS>
+@{
+    ViewBag.Title = "Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> listaCat = (List<SelectListItem>)ViewBag.ListaCat;
+}
+
+<section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(@Url.Content("~/theme/images/bg-title-page-01.jpg"));">
+    <h2 class="tit6 t-center">
+        Productos
+    </h2>
+</section>
+
+<section class="bg2-pattern p-t-116 p-b-110 t-center p-l-15 p-r-15">
+
+    @using (Ajax.BeginForm("FiltroProductos", "Employees",null, new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "tableProducts",
+        InsertionMode = InsertionMode.Replace
+    }, new { @id = "frmFiltro" }))
+    {
+        @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Buscar por nombre o apellido" })
+    }
+
+    <br /><button type="button" onclick="Agregar()" class="btn3 flex-c-m size36 txt11 trans-0-4" data-toggle="modal" data-target="#addModal">
+        Agregar
+    </button>
+    
+    <div id="tableProducts">
+        @Html.Partial("_TableProducts", Model)
+    </div>
+
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AgregarProducto", "Employees", null, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "Guardar"
+                },new { @enctype = "multipart/form-data" }))
+                {
+                    @Html.Hidden("titulo")
+                    <div class="form-group">
+                        @Html.Label("Categoría")
+                        @Html.DropDownList("idCategoria", listaCat, "Escoge la categoria", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Nombre")
+                        @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Escribe el nombre" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Imagen")
+                        @Html.TextBox("archivo", null, new { @class = "form-control", @placeholder = "Imagen", @type = "file", @accept = "image/png" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Detalle")
+                        @Html.TextBox("detalle", null, new { @class = "form-control", @placeholder = "Detalla el producto" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Existencias")
+                        @Html.TextBox("stock", null, new { @class = "form-control", @placeholder = "Escribe la dirección",@type="number" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Precio")
+                        @Html.TextBox("precio", null, new { @class = "form-control", @placeholder = "Escribe la dirección", @type = "number", @step = "0.01" })
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnClose" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">Agregar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        function Agregar()
+        {
+            document.getElementById("titulo").value = "1";
+        }
+
+        document.getElementById("nombre").addEventListener("keyup", (e) => {
+            $("#frmFiltro").trigger("submit");
+        });
+
+        function Guardar(resultado)
+        {
+            if (resultado == "1")
+            {
+                $("#frmFiltro").trigger("submit");
+                document.getElementById("btnClose").click();
+            }
+    }
+</script>

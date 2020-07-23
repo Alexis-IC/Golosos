@@ -1,0 +1,129 @@
+﻿@using LosGolosos.Models
+@model List<EmployeesCLS>
+@{
+    ViewBag.Title = "Empleados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> listaRol = (List < SelectListItem >) ViewBag.ListaRol;
+    List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.ListaSexo;
+}
+<section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(@Url.Content("~/theme/images/bg-title-page-01.jpg"));">
+    <h2 class="tit6 t-center">
+        Empleados
+    </h2>
+</section>
+
+<section class="bg2-pattern p-t-116 p-b-110 t-center p-l-15 p-r-15">
+
+    @using (Ajax.BeginForm("Filtro", "", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "tableEmployees",
+        InsertionMode = InsertionMode.Replace
+    }, new { @id = "frmFiltro" }))
+    {
+        @Html.TextBox("nombre", null, new { @class = "form-control",@placeholder="Buscar por nombre o apellido" })
+    }
+
+    <br /><button type="button" onclick="Agregar()" class="btn3 flex-c-m size36 txt11 trans-0-4" data-toggle="modal" data-target="#addModal">
+        Registrar
+    </button>
+    <div id="tableEmployees">
+        @Html.Partial("_TableEmployees", Model)
+    </div>
+
+</section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Ajax.BeginForm("Registrar", "Employees", null, new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        OnSuccess = "Guardar"
+                    }))
+                    {
+                        @Html.Hidden("titulo")
+                        <div class="form-group">
+                            @Html.Label("Cargo")
+                            @Html.DropDownList("idCargo", listaRol, "Escoge el rol", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Nombre")
+                            @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Escribe el nombre" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Apellido")
+                            @Html.TextBox("apellido", null, new { @class = "form-control", @placeholder = "Escribe el apellido" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Género")
+                            @Html.DropDownList("sexo", listaSexo, "Escoge tu género", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Dirección")
+                            @Html.TextBox("dir", null, new { @class = "form-control", @placeholder = "Escribe la dirección" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Teléfono")
+                            @Html.TextBox("tel", null, new { @class = "form-control", @placeholder = "Escribe el teléfono" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Correo")
+                            @Html.TextBox("correo", null, new { @class = "form-control", @placeholder = "Escribe el correo" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("DUI")
+                            @Html.TextBox("dui", null, new { @class = "form-control", @placeholder = "Escribe el DUI" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Usuario")
+                            @Html.TextBox("user", null, new { @class = "form-control", @placeholder = "Escribe tu usuario" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Contraseña")
+                            @Html.TextBox("pass", null, new { @class = "form-control", @placeholder = "Escribe tu usuario" ,@type="password"})
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnClose" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn3 flex-c-m size36 txt11 trans-0-4">Registrar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function Agregar()
+        {
+            document.getElementById("titulo").value = "1";
+        }
+
+        document.getElementById("nombre").addEventListener("keyup", (e) => {
+            $("#frmFiltro").trigger("submit");
+        });
+
+        function Guardar(resultado)
+        {
+            if (resultado == "1")
+            {
+                $("#frmFiltro").trigger("submit");
+                document.getElementById("btnClose").click();
+            }
+        }
+    </script>
