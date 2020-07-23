@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LosGolosos.Models;
@@ -66,6 +68,8 @@ namespace LosGolosos.Controllers
             ViewBag.ListaCat = ComboCat();
             return View(list);
         }
+
+
 
 
         public ActionResult FiltroProductos(string nombre)
@@ -311,6 +315,167 @@ namespace LosGolosos.Controllers
             Session["Carrito"] = list;
 
             return PartialView("_TableCart",list);
+        }
+
+        public ActionResult ProcesarCarrito(int idCarrito)
+        {
+            int filas = 0;
+            UsuarioCLS user = (UsuarioCLS)Session["User"];
+
+            if(idCarrito == 1)
+            {
+                using (BDGolososEntities bd = new BDGolososEntities())
+                {
+                    int idPersona = (from person in bd.Personas
+                                     join usuario in bd.Usuarios
+                                     on person.idPersona equals usuario.idPersona
+                                     where usuario.usuario == user.user
+                                     select person).First().idPersona;
+
+                    int idCliente = (int)(bd.Clientes.Where(p => p.idPersona.Value.Equals(idPersona)).First().idCliente);
+
+                    Ventas oVentas = new Ventas();
+                    oVentas.idCliente = idCliente;
+                    oVentas.fecha = DateTime.Now;
+                    oVentas.estado = true;
+
+                    bd.Ventas.Add(oVentas);
+                    filas = bd.SaveChanges();
+
+
+                    if (filas > 0)
+                    {
+                        string mail = (from person in bd.Personas
+                                       join usuario in bd.Usuarios
+                                       on person.idPersona equals usuario.idPersona
+                                       where usuario.usuario == user.user
+                                       select person).First().correo;
+
+                        int nOrden = bd.Ventas.OrderByDescending(p => p.fecha).First().idVenta;
+
+                        EnviarTicket(mail,(List<ProductoCLS>)Session["Carrito"],nOrden);
+                    }
+                }
+            }
+
+            List<ProductoCLS> listaVacia = new List<ProductoCLS>();
+            Session.Remove("Carrito");
+
+            return PartialView("_TableCart", listaVacia);
+        }
+
+        public ActionResult ControlVentas()
+        {
+            List<VentaCLS> list = null;
+
+            using (BDGolososEntities bd = new BDGolososEntities())
+            {
+                list = (from venta in bd.Ventas
+                        join cliente in bd.Clientes
+                        on venta.idCliente equals cliente.idCliente
+                        join person in bd.Personas
+                        on cliente.idPersona equals person.idPersona
+                        where venta.estado == true
+                        select new VentaCLS
+                        {
+                            id = (int)venta.idVenta,
+                            nombre = person.nombre,
+                            apellido = person.apellido,
+                            tel = person.tel,
+                            fecha = (DateTime)venta.fecha
+                        }).ToList();
+            }
+
+            return View(list);
+        }
+
+        public ActionResult FiltroVentas(string nombre, int idVenta)
+        {
+            List<VentaCLS> list = null;
+
+            using (BDGolososEntities bd = new BDGolososEntities())
+            {
+                if(idVenta > 0)
+                {
+                    Ventas oVenta = bd.Ventas.Find(idVenta);
+                    oVenta.estado = false;
+                    bd.SaveChanges();
+                }
+
+                if(nombre==null)
+                {
+                    list = (from venta in bd.Ventas
+                            join cliente in bd.Clientes
+                            on venta.idCliente equals cliente.idCliente
+                            join person in bd.Personas
+                            on cliente.idPersona equals person.idPersona
+                            where venta.estado == true
+                            select new VentaCLS
+                            {
+                                id = (int)venta.idVenta,
+                                nombre = person.nombre,
+                                apellido = person.apellido,
+                                tel = person.tel,
+                                fecha = (DateTime)venta.fecha
+                            }).ToList();
+                }
+                else
+                {
+                    list = (from venta in bd.Ventas
+                            join cliente in bd.Clientes
+                            on venta.idCliente equals cliente.idCliente
+                            join person in bd.Personas
+                            on cliente.idPersona equals person.idPersona
+                            where venta.estado == true && (person.nombre.Contains(nombre) || person.apellido.Contains(nombre))
+                            select new VentaCLS
+                            {
+                                id = (int)venta.idVenta,
+                                nombre = person.nombre,
+                                apellido = person.apellido,
+                                tel = person.tel,
+                                fecha = (DateTime)venta.fecha
+                            }).ToList();
+                }
+                
+            }
+
+            return PartialView("_TablaVentas",list);
+        }
+
+        public bool EnviarTicket(string mail,List<ProductoCLS> lista, int nOrden)
+        {
+            MailCLS oMailCLS = new MailCLS();
+
+            try
+            {
+                MailMessage correo = new MailMessage();
+                correo.From = new MailAddress("2541852018@mail.utec.edu.sv");
+                correo.To.Add(mail);
+                correo.Subject = "Ticket de Compra - Los Golosos";
+                correo.Body = oMailCLS.GenerarTicket(lista,nOrden);
+                correo.IsBodyHtml = true;
+                correo.Priority = MailPriority.Normal;
+
+
+                //Configuración del servidor SMTP
+                using (SmtpClient client = new SmtpClient())
+                {
+                    client.EnableSsl = true;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("goloso.client@gmail.com", "?Ki_l-5>*");
+                    client.Host = "smtp.gmail.com";
+                    client.Port = 587;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                    client.Send(correo);
+                }
+
+            }
+            catch{
+                return false;
+            }
+
+            return true;
         }
 
         public string Registrar(EmployeesCLS oEmployeesCLS, string titulo)

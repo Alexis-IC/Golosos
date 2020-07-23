@@ -1,0 +1,30 @@
+﻿@using LosGolosos.Models
+@model List<VentaCLS>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">@Html.LabelFor(p => Model[0].id)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].nombre)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].apellido)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].tel)</th>
+            <th class="text-center">@Html.LabelFor(p => Model[0].fecha)</th>
+            <th class="text-center" width="10%">@Html.Label("Procesar")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (VentaCLS venta in Model)
+        {
+            <tr>
+                <td>@venta.id</td>
+                <td>@venta.nombre</td>
+                <td>@venta.apellido</td>
+                <td>@venta.tel</td>
+                <td>@venta.fecha</td>
+                <td>
+                    <button type="button" onclick="getId(@venta.id)" class="fa fa-eject"></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -177,6 +177,7 @@
     <Compile Include="Models\Usuarios.cs">
       <DependentUpon>BDGolosos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VentaCLS.cs" />
     <Compile Include="Models\Ventas.cs">
       <DependentUpon>BDGolosos.tt</DependentUpon>
     </Compile>
@@ -2284,6 +2285,8 @@
     <Content Include="Views\Employees\Ordenar.cshtml" />
     <Content Include="Views\Employees\_TableOrders.cshtml" />
     <Content Include="Views\Employees\_TableCart.cshtml" />
+    <Content Include="Views\Employees\ControlVentas.cshtml" />
+    <Content Include="Views\Employees\_TablaVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

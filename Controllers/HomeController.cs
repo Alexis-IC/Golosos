@@ -119,6 +119,7 @@ namespace LosGolosos.Controllers
             return View();
         }
         [HttpPost]
+        
         public ActionResult Contact(MailCLS oMailCLS)
         {
             try
@@ -127,7 +128,7 @@ namespace LosGolosos.Controllers
                 correo.From = new MailAddress(oMailCLS.desde);
                 correo.To.Add("2541852018@mail.utec.edu.sv");
                 correo.Subject = "Formulario de contácto - Los Golosos";
-                correo.Body = oMailCLS.GenerarTicket();
+                correo.Body = oMailCLS.GenerarContacto();
                 correo.IsBodyHtml = true;
                 correo.Priority = MailPriority.Normal;
 

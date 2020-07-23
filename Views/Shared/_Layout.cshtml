@@ -55,25 +55,21 @@
                             <ul class="main_menu">
                                 <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
 
-                                <li>@Html.ActionLink("OrT", "Menu", "Home")</li>
-
-                                <li>@Html.ActionLink("ProT", "Productos", "Employees")</li>
-
                                 @if (user == null)
                                 {
                                     <li>@Html.ActionLink("Ingresar", "Login", "Home")</li>
                                 }
                                 else if (user.idRol == 1)
                                 {
-                                    <li>@Html.ActionLink("AdminCP", "Index", "Employees")</li>
+                                    <li>@Html.ActionLink("cEmpleados", "Index", "Employees")</li>
                                 }
                                 else if (user.idRol == 2)
                                 {
-                                    <li>@Html.ActionLink("VentasCP", "Ventas", "Employees")</li>
+                                    <li>@Html.ActionLink("cVentas", "ControlVentas", "Employees")</li>
                                 }
                                 else
                                 {
-                                    <li>@Html.ActionLink("Ordenar", "Menu", "Home")</li>
+                                    <li>@Html.ActionLink("Ordenar", "Ordenar", "Employees")</li>
                                 }
 
                                 <li>@Html.ActionLink("Nosotros", "About", "Home")</li>
@@ -111,13 +107,21 @@
                 @Html.ActionLink("Inicio", "Index", "Home", new { @class = "txt19" })
             </li>
 
-            <li class="t-center m-b-13">
-                @Html.ActionLink("Menú", "Menu", "Home", new { @class = "txt19" })
-            </li>
-
-            <li class="t-center m-b-13">
-                @Html.ActionLink("Mi Cuenta", "Index", "Employees", new { @class = "txt19" })
-            </li>
+            @if (user != null)
+            {
+                if (user.idRol == 1)
+                {
+                    <li class="t-center m-b-13">@Html.ActionLink("cEmpleados", "Index", "Employees",null, new { @class = "txt19" })</li>
+                }
+                else if (user.idRol == 2)
+                {
+                    <li class="t-center m-b-13">@Html.ActionLink("cVentas", "ControlVentas", "Employees",null, new { @class = "txt19" })</li>
+                }
+                else
+                {
+                    <li class="t-center m-b-13">@Html.ActionLink("Ordenar", "Ordenar", "Employees",null, new { @class = "txt19" })</li>
+                }
+            }
 
             <li class="t-center m-b-13">
                 @Html.ActionLink("Nosotros", "About", "Home", new { @class = "txt19" })
@@ -128,15 +132,15 @@
                 @Html.ActionLink("Contáctanos", "Contact", "Home", new { @class = "txt19" })
             </li>
 
-            <li class="t-center">
-                <!-- Button3 -->
-                @Html.ActionLink("Ingresar", "Login", "Home", new { @class = "btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" })
-            </li>
 
-            <li class="t-center">
-                <!-- Button3 -->
-                @Html.ActionLink("Salir", "Logout", "Home", new { @class = "btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" })
-            </li>
+            @if (user == null)
+            {
+                <li class="t-center">@Html.ActionLink("Ingresar", "Login", "Home", new { @class = "btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" })</li>
+            }
+            else
+            {
+                <li class="t-center">@Html.ActionLink("Salir", "Logout", "Home", new { @class = "btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" })</li>
+            }
 
         </ul>
 

@@ -1,0 +1,46 @@
+﻿@using LosGolosos.Models
+@model List<VentaCLS>
+
+@{
+    ViewBag.Title = "Ventas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(@Url.Content("~/theme/images/bg-title-page-01.jpg"));">
+    <h2 class="tit6 t-center">
+        Control de ventas
+    </h2>
+</section>
+
+<section class="bg2-pattern p-t-116 p-b-80 t-center p-l-15 p-r-15">
+
+    @using (Ajax.BeginForm("FiltroVentas", "Employees", null, new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "tableOrders",
+        InsertionMode = InsertionMode.Replace
+    }, new { @id = "frmFiltro" }))
+    {
+        @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Buscar producto por nombre" })
+        @Html.Hidden("idVenta",0)
+    }
+    <br />
+    <div id="tableOrders">
+        @Html.Partial("_TablaVentas", Model)
+    </div>
+
+</section>
+
+<script>
+
+    document.getElementById("nombre").addEventListener("keyup", (e) => {
+        $("#frmFiltro").trigger("submit");
+    });
+
+    function getId(id)
+    {
+        document.getElementById("idVenta").value = id;
+        $("#frmFiltro").trigger("submit");
+    }
+
+</script>

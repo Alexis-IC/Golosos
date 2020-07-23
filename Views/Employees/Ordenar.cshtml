@@ -12,7 +12,7 @@
     </h2>
 </section>
 
-<section class="bg2-pattern p-t-116 p-b-110 t-center p-l-15 p-r-15">
+<section class="bg2-pattern p-t-116 p-b-80 t-center p-l-15 p-r-15">
 
     @using (Ajax.BeginForm("FiltroProductos", "Employees", null, new AjaxOptions
     {
@@ -21,7 +21,7 @@
         InsertionMode = InsertionMode.Replace
     }, new { @id = "frmFiltro" }))
     {
-        @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Buscar por nombre o apellido" })
+        @Html.TextBox("nombre", null, new { @class = "form-control", @placeholder = "Buscar producto por nombre" })
     }
     <br />
     <div id="tableOrders">
@@ -30,7 +30,7 @@
 
 </section>
 
-<section class="bg2-pattern p-t-116 p-b-110 t-center p-l-15 p-r-15">
+<section class="bg2-pattern p-b-110 t-center p-l-15 p-r-15">
     @using (Ajax.BeginForm("AgregarCarrito", "Employees", null, new AjaxOptions
     {
         HttpMethod = "POST",
@@ -40,16 +40,44 @@
     {
         @Html.Hidden("idProducto");
     }
-    
-    <button type="submit" class="ml-auto btn3 flex-c-m size36 txt11 trans-0-4" id="btnComprar" hidden="hidden">Comprar</button>
-    <div id="tableCart" hidden="hidden">
-        @Html.Partial("_TableCart", carrito)
-    </div>
-    
+    <div id="contenidoOculto" hidden="hidden">
+        <span class="tit2 t-center p-b-20">
+            Carrito de Compras
+        </span><br /><br />
+
+        <div id="tableCart">
+            @Html.Partial("_TableCart", carrito)
+        </div>
+
+        @using (Ajax.BeginForm("ProcesarCarrito", "Employees", null, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "Ocultar"
+        },new { @id="rodarCarrito"}))
+        {
+            @Html.Hidden("idCarrito")
+
+            <div class="ml-auto">
+                <button type="button" onclick="Procesar(1)" class="ml-auto btn btn-dark size36 txt11 trans-0-4" id="btnComprar">Comprar</button>
+                <button type="button" onclick="Procesar(2)" class="ml-auto btn btn-danger size36 txt11 trans-0-4" id="btnComprar">Cancelar</button>
+            </div>
+         }
+        </div>
 </section>
 
 
 <script>
+
+    function Procesar(id)
+    {
+        document.getElementById("idCarrito").value = id;
+        $("#rodarCarrito").trigger("submit");
+    }
+
+    function Ocultar()
+    {
+        document.getElementById("contenidoOculto").setAttribute("hidden","hidden");
+    }
 
     document.getElementById("nombre").addEventListener("keyup", (e) => {
         $("#frmFiltro").trigger("submit");
@@ -57,8 +85,7 @@
 
     function getId(id)
     {
-        document.getElementById("tableCart").removeAttribute("hidden");
-        document.getElementById("btnComprar").removeAttribute("hidden");
+        document.getElementById("contenidoOculto").removeAttribute("hidden");
 
         document.getElementById("idProducto").value = id;
         $("#frmCarrito").trigger("submit");
