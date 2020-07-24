@@ -61,7 +61,8 @@
                                 }
                                 else if (user.idRol == 1)
                                 {
-                                    <li>@Html.ActionLink("cEmpleados", "Index", "Employees")</li>
+                                    <li>@Html.ActionLink("c-Empleados", "Index", "Employees")</li>
+                                    <li>@Html.ActionLink("c-Productos", "Productos", "Employees")</li>
                                 }
                                 else if (user.idRol == 2)
                                 {
@@ -111,25 +112,26 @@
             {
                 if (user.idRol == 1)
                 {
-                    <li class="t-center m-b-13">@Html.ActionLink("cEmpleados", "Index", "Employees",null, new { @class = "txt19" })</li>
+                    <li class="t-center m-b-13">@Html.ActionLink("c-Empleados", "Index", "Employees", null, new { @class = "txt19" })</li>
+                    <li class="t-center m-b-13">@Html.ActionLink("c-Productos", "Productos", "Employees", null, new { @class = "txt19" })</li>
                 }
                 else if (user.idRol == 2)
                 {
-                    <li class="t-center m-b-13">@Html.ActionLink("cVentas", "ControlVentas", "Employees",null, new { @class = "txt19" })</li>
+                    <li class="t-center m-b-13">@Html.ActionLink("c-Ventas", "ControlVentas", "Employees", null, new { @class = "txt19" })</li>
                 }
                 else
                 {
-                    <li class="t-center m-b-13">@Html.ActionLink("Ordenar", "Ordenar", "Employees",null, new { @class = "txt19" })</li>
+                    <li class="t-center m-b-13">@Html.ActionLink("Ordenar", "Ordenar", "Employees", null, new { @class = "txt19" })</li>
                 }
             }
 
             <li class="t-center m-b-13">
-                @Html.ActionLink("Nosotros", "About", "Home", new { @class = "txt19" })
+                @Html.ActionLink("Nosotros", "About", "Home", null,new { @class = "txt19" })
             </li>
 
 
             <li class="t-center m-b-33">
-                @Html.ActionLink("Contáctanos", "Contact", "Home", new { @class = "txt19" })
+                @Html.ActionLink("Contáctanos", "Contact", "Home",null, new { @class = "txt19" })
             </li>
 
 

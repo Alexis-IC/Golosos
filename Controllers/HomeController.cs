@@ -38,9 +38,10 @@ namespace LosGolosos.Controllers
                 if(autenticado)
                 {
                     int idPersona = (int)bd.Usuarios.Where(p => p.usuario.Equals(oUsuarioCLS.user)).FirstOrDefault().idPersona;
-                    if(bd.Empleados.Find(idPersona) != null)
+
+                    if(bd.Empleados.Where(p=>p.idPersona.Value.Equals(idPersona)).FirstOrDefault() != null)
                     {
-                        oUsuarioCLS.idRol = (int)bd.Empleados.Find(idPersona).idCargo;
+                        oUsuarioCLS.idRol = (int)bd.Empleados.Where(p=>p.idPersona.Value.Equals(idPersona)).First().idCargo;
                     }
                     else
                     {
@@ -126,7 +127,7 @@ namespace LosGolosos.Controllers
             {
                 MailMessage correo = new MailMessage();
                 correo.From = new MailAddress(oMailCLS.desde);
-                correo.To.Add("2541852018@mail.utec.edu.sv");
+                correo.To.Add("2555732018@mail.utec.edu.sv");
                 correo.Subject = "Formulario de contácto - Los Golosos";
                 correo.Body = oMailCLS.GenerarContacto();
                 correo.IsBodyHtml = true;
